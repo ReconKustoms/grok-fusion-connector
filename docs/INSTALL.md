@@ -81,3 +81,23 @@ rm -rf ~/.grok/fusion-stack ~/.grok/mcp/fusion
 ```
 
 Edit `~/.grok/config.toml` and delete `[mcp_servers.fusion360]` if present. Remove the Custom connector on grok.com.
+
+## Windows (git clone)
+
+The brew path above is Mac-only. On Windows, clone the repo. You must already have **Python** (`python` or `python3`) and **cloudflared** on PATH; the scripts will error if either is missing and will not install them.
+
+Fusion running → Preferences → General → API → **Fusion MCP Server**.
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File installers\start-fusion-grok-stack.ps1
+```
+
+Prints `GROK_CONNECTOR_URL=https://<name>.trycloudflare.com/mcp` (hostname changes every start). Copies the URL to the clipboard when `Set-Clipboard` is available.
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File installers\stop-fusion-grok-stack.ps1
+```
+
+Scripts target Windows PowerShell 5.1+ (or pwsh 7+). State files: `%USERPROFILE%\.grok\fusion-stack\` (`bridge.pid`, `cloudflared.pid`, `cloudflared.log`, `connector.url`, `bridge.log`). Override with `GROK_FUSION_STATE`.
+
+Optional env (same as bash): `BRIDGE_LISTEN` (default `127.0.0.1`), `BRIDGE_PORT` (default `18782`), `FUSION_MCP_UPSTREAM` (default `http://127.0.0.1:27182`), `TUNNEL_WAIT` (default `45`). Tunnel the **bridge** (`:18782`), not Fusion (`:27182`). Connector URL must end in `/mcp`.

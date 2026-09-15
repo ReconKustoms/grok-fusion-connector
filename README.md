@@ -61,6 +61,20 @@ kill "$(cat ~/.grok/fusion-stack/bridge.pid)"
 kill "$(cat ~/.grok/fusion-stack/cloudflared.pid)"
 ```
 
+## Windows (git clone)
+
+Mac brew install is unchanged. On Windows, clone this repo. Put **Python** (`python` or `python3`) and **cloudflared** on PATH yourself — these scripts do not install them.
+
+Fusion running + Preferences → General → API → Fusion MCP Server, then:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File installers\start-fusion-grok-stack.ps1
+# prints GROK_CONNECTOR_URL=https://….trycloudflare.com/mcp
+powershell -NoProfile -ExecutionPolicy Bypass -File installers\stop-fusion-grok-stack.ps1
+```
+
+PowerShell 5.1+ (Windows 10/11) or pwsh 7+. Same env vars as the bash stack: `BRIDGE_LISTEN`, `BRIDGE_PORT`, `FUSION_MCP_UPSTREAM`, `TUNNEL_WAIT`, `GROK_FUSION_STATE` (default `%USERPROFILE%\.grok\fusion-stack`).
+
 ## Update
 
 ```bash
